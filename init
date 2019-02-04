@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cp .env-example .env
+cp phinx-example.yml phinx.yml
+composer install

@@ -1,0 +1,4 @@
+.env
+.vscode
+phinx.yml
+vendor/*

@@ -1,0 +1,35 @@
+#!/bin/bash
+
+function showHelp {
+    echo "Migrate                  : ./db m"
+    echo "Reverse                  : ./db r"
+    echo "Seed                     : ./db s"
+    echo "Reverse & Migrate        : ./db rm"
+    echo "Reverse & Migrate & Seed : ./db rms"
+}
+
+if [ "$1" == "m" ]
+then
+    vendor/bin/phinx migrate
+elif [ "$1" == "r" ]
+then
+    vendor/bin/phinx migrate -t 0
+elif [ "$1" == "s" ]
+then
+    vendor/bin/phinx seed:run
+elif [ "$1" == "rm" ]
+then
+    vendor/bin/phinx migrate -t 0
+    vendor/bin/phinx migrate
+elif [ "$1" == "rms" ]
+then
+    vendor/bin/phinx migrate -t 0
+    vendor/bin/phinx migrate
+    vendor/bin/phinx seed:run
+elif [ "$1" == "help" ]
+then
+    showHelp
+elif [ -z "$1" ]
+then
+    showHelp
+fi
