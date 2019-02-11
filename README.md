@@ -15,7 +15,7 @@
 
  Configurer .env selon configuration base de données  
  Configurer la rubrique dev dans phinx.yml également, si cela n'est pas automatiquement faite  
-Executer le script db avec paramètre m
+Exécuter le script db avec paramètre m
 
     bash db m
 Créer un virtual host avec dossier root /public/
