@@ -7,7 +7,7 @@
  - PHP ~7.3
  - Shell BASH (e.x Git bash)
  ## Installation 
- Créer un dépôt git local et git fetch le contenu de ce dépôt.  
+ Créer un dépôt git local et ajouter un remote de ce dépot git fetch le contenu.  
  Créer une base de données m306  
  Avec le Shell BASH dans le dossier racine du projet, exécuter le script init
 
