@@ -7,14 +7,14 @@
  - PHP ~7.3
  - Shell BASH (e.x Git bash)
  ## Installation 
- Créer un dépôt git local et git fetch le contenu de ce dépôt.
- Créer une base de données m306
+ Créer un dépôt git local et git fetch le contenu de ce dépôt.  
+ Créer une base de données m306  
  Avec le Shell BASH, exécuter le script init
 
      bash init
 
- Configurer .env selon configuration base de données
- Configurer la rubrique dev dans phinx.yml également
+ Configurer .env selon configuration base de données  
+ Configurer la rubrique dev dans phinx.yml également  
 Executer le script db avec paramètre m
 
     bash db m
