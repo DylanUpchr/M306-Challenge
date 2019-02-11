@@ -13,7 +13,9 @@
  Avec le Shell BASH, exécuter le script init
 
      bash init
+Si le script init n'arrive pas a faire tourner composer install, faites le manuellement avec
 
+     composer install
  Configurer .env selon configuration base de données  
  Configurer la rubrique dev dans phinx.yml également si cela n'est pas automatiquement faite  
 Exécuter le script db avec paramètre m
