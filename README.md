@@ -4,7 +4,7 @@
 
  - Composer [download](https://getcomposer.org/download/)
  - Serveur Web/DB (e.x. Apache, Nginx / MySQL) obtenable avec un uWAMP ou  EasyPHP Devserver
- - PHP ~7.3 (Windows PHP Download [https://windows.php.net/download#php-7.3])
+ - PHP ~7.3 [Windows PHP Download](https://windows.php.net/download#php-7.3)
  (Ne pas oublier d'ajouter php.exe au variables d'environnement [Comment ajouter une variable d'environnement sous Windows](https://docs.alfresco.com/4.2/tasks/fot-addpath.html))
  - Shell BASH (e.x Git bash)
  ## Installation 
