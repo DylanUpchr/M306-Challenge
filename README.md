@@ -9,7 +9,7 @@
  ## Installation 
  Créer un dépôt git local et git fetch le contenu de ce dépôt.  
  Créer une base de données m306  
- Avec le Shell BASH, exécuter le script init
+ Avec le Shell BASH dans le dossier racine du projet, exécuter le script init
 
      bash init
 
