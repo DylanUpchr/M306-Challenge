@@ -9,7 +9,14 @@
  - Shell BASH (e.x Git bash)
  ## Installation 
  Git clone ce dépôt.  
- Créer une base de données m306  
+ Créer une base de données m306
+ 
+ Dans php.ini, activer les extensions:
+ - curl
+ - fileinfo
+ - openssl
+ - pdo_mysql
+ 
  Avec le Shell BASH, exécuter le script init
 
      bash init
