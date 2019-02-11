@@ -12,7 +12,7 @@ class DB extends PDO
      *
      * @return void
      */
-    public static function getInstance(): DB
+    public static function getInstance()
     {
         if (self::$instance === null) {
             try {
@@ -41,7 +41,7 @@ class DB extends PDO
      * @param mixed ...$params
      * @return mixed
      */
-    public static function run(string $query, ...$params)
+    public static function run($query, ...$params)
     {
         $query = self::getInstance()->prepare($query);
         $query->execute($params);

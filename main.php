@@ -16,7 +16,7 @@ if (getenv('APP_DEBUG')) {
  * @param string $path
  * @return void
  */
-function resources_path(string $path = ''): string {
+function resources_path($path = '') {
     return __DIR__.'/resources/'.$path;
 }
 
@@ -26,7 +26,7 @@ function resources_path(string $path = ''): string {
  * @param string $title
  * @return void
  */
-function get_title(string $title): string {
+function get_title($title) {
     return getenv('APP_TITLE').' - '.$title;
 }
 
@@ -35,7 +35,7 @@ function get_title(string $title): string {
  *
  * @return void
  */
-function get_lang(): string {
+function get_lang() {
     return 'lang="'.getenv('APP_LANG').'"';
 }
 
@@ -45,8 +45,7 @@ function get_lang(): string {
  * @param string $route
  * @return void
  */
-function get_active(string $route): string
-{
+function get_active($route) {
     if (($route === '/') && (($_SERVER['REQUEST_URI'] == '/') || ($_SERVER['REQUEST_URI'] == '/index.php')))
     {
         return 'active';
@@ -67,7 +66,7 @@ function get_active(string $route): string
  * @param mixed $obj
  * @return void
  */
-function dump($obj):void {
+function dump($obj) {
     var_dump($obj);
 }
 
@@ -77,7 +76,7 @@ function dump($obj):void {
  * @param mixed $obj
  * @return void
  */
-function dd($obj): void {
+function dd($obj) {
     dump($obj);
     die();
 }
@@ -88,15 +87,15 @@ function dd($obj): void {
  * @param string $route
  * @return void
  */
-function redirect(string $route): void {
+function redirect($route) {
     header('Location: '.$route);
     die();
 }
 
-function root_path(string $path = ''): string {
+function root_path($path = '') {
     return __DIR__.'/'.$path;
 }
 
-function public_path(string $path = ''): string {
+function public_path($path = '') {
     return $_SERVER['DOCUMENT_ROOT'].'/'.$path;
 }
