@@ -14,7 +14,7 @@
      bash init
 
  Configurer .env selon configuration base de données  
- Configurer la rubrique dev dans phinx.yml également, si cela n'est pas automatiquement faite 
+ Configurer la rubrique dev dans phinx.yml également, si cela n'est pas automatiquement faite  
 Executer le script db avec paramètre m
 
     bash db m
