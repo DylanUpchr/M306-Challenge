@@ -3,10 +3,10 @@ require_once "../../../../main.php";
 
 use App\{DB, Score, Challenge, Game, User};
 
-$score = filter_input(INPUT_GET, 'score', FILTER_SANITIZE_STRING);
-$challengeId = filter_input(INPUT_GET, 'challenge_id', FILTER_SANITIZE_STRING);
-$gameId = filter_input(INPUT_GET, 'game_id', FILTER_SANITIZE_STRING);
-$accessToken = filter_input(INPUT_GET, 'access_token', FILTER_SANITIZE_STRING);
+$score = filter_input(INPUT_POST, 'score', FILTER_SANITIZE_STRING);
+$challengeId = filter_input(INPUT_POST, 'challenge_id', FILTER_SANITIZE_STRING);
+$gameId = filter_input(INPUT_POST, 'game_id', FILTER_SANITIZE_STRING);
+$accessToken = filter_input(INPUT_POST, 'access_token', FILTER_SANITIZE_STRING);
 
 $errors = [];
 
