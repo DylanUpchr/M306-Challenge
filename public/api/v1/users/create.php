@@ -1,23 +1,48 @@
 <?php
 require_once "../../../../main.php";
-use App\DB;
+
+use App\User;
 
 $username = filter_input(INPUT_GET, 'username', FILTER_SANITIZE_STRING);
-$password = password_hash(filter_input(INPUT_GET, 'password'), PASSWORD_DEFAULT);
-$firstName = filter_input(INPUT_GET, 'fn', FILTER_SANITIZE_STRING);
-$lastName = filter_input(INPUT_GET, 'ln', FILTER_SANITIZE_STRING);
-$accessToken = sha1(uniqid());
-$erreur = "";
+$password = filter_input(INPUT_GET, 'password');
+$firstName = filter_input(INPUT_GET, 'first_name', FILTER_SANITIZE_STRING);
+$lastName = filter_input(INPUT_GET, 'last_name', FILTER_SANITIZE_STRING);
+
+$errors = [];
+
+if (!$username) {
+    $errors[] = 'Missing parameter username';
+} else {
+    if (User::findByUsername($username)) {
+        $errors[] = 'Username already taken';
+    }
+}
+
+if (!$password) {
+    $errors[] = 'Missing parameter password';
+}
+
+if (!$firstName) {
+    $errors[] = 'Missing parameter first_name';
+}
+
+if (!$lastName) {
+    $errors[] = 'Missing parameter last_name';
+}
 
 header('Content-Type: application/json;charset=utf-8');
 
+if (empty($errors)) {
+    User::create($username, $password, $firstName, $lastName);
 
-if (!empty($username) && !empty($password) && !empty($firstName) && !empty($lastName) && !empty($accessToken)){
-    DB::run('INSERT INTO `users`(`username`, `password`, `first_name`, `last_name`, `access_token`) VALUES (?,?,?,?,?)', $username, $password, $firstName, $lastName, $accessToken);
-    echo json_encode(["token" => $accessToken]);
-}
-else{
-    $erreur = "Manque de paramètres.";
-    echo json_encode(["error" => utf8_encode($erreur)], JSON_UNESCAPED_UNICODE);
+    echo json_encode([
+        'successes' => [
+            'User successfully registered'
+        ],
+    ]);
+} else {
+    echo json_encode([
+        'errors' => $errors,
+    ]);
 }
 

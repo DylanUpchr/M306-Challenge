@@ -41,6 +41,21 @@ class User
         return self::factory(DB::run('SELECT * FROM users WHERE access_token = ? LIMIT 1', $accessToken)[0] ?? null) ?? null;
 	}
 
+	public static function findByUsername($username)
+	{
+		return self::factory(DB::run('SELECT * FROM users WHERE username = ? LIMIT 1', $username)[0] ?? null) ?? null;
+	}
+
+	public static function create($username, $password, $firstName, $lastName)
+	{
+		$password = password_hash($password, PASSWORD_DEFAULT);
+		$accessToken = sha1(uniqid());
+
+		DB::run('INSERT INTO users(username, password, first_name, last_name, access_token) VALUES (?, ?, ?, ?, ?)',
+			$username, $password, $firstName, $lastName, $accessToken
+		);
+	}
+
 	/**
 	 * Depricated.
 	 */
