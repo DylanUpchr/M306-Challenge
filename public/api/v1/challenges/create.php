@@ -9,6 +9,8 @@ define('DUREE_CHALLENGE', 1000000); //timestamp actuellement 1jour
 // Filtrage des paramètre get
 $challengeName = filter_input(INPUT_GET, PARAM_CHALLENGE_NAME, FILTER_SANITIZE_STRING);
 
+header('Content-Type: application/json;charset=utf-8');
+
 if ($challengeName != '') {
     // Insertion d'un nouveau challenge dans la base
     DB::run('INSERT INTO challenges (name, start_date, end_date) VALUES ("'.$challengeName.'", NOW(), NOW() + '.DUREE_CHALLENGE.')');
