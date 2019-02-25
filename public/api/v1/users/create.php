@@ -2,10 +2,10 @@
 require_once "../../../../main.php";
 use App\DB;
 
-$username = filter_input(INPUT_GET, 'username', FILTER_SANITIZE_STRING);
-$password = password_hash(filter_input(INPUT_GET, 'password'), PASSWORD_DEFAULT);
-$firstName = filter_input(INPUT_GET, 'fn', FILTER_SANITIZE_STRING);
-$lastName = filter_input(INPUT_GET, 'ln', FILTER_SANITIZE_STRING);
+$username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
+$password = password_hash(filter_input(INPUT_POST, 'password'), PASSWORD_DEFAULT);
+$firstName = filter_input(INPUT_POST, 'fn', FILTER_SANITIZE_STRING);
+$lastName = filter_input(INPUT_POST, 'ln', FILTER_SANITIZE_STRING);
 $accessToken = sha1(uniqid());
 $erreur = "";
 
@@ -17,7 +17,7 @@ if (!empty($username) && !empty($password) && !empty($firstName) && !empty($last
     echo json_encode(["token" => $accessToken]);
 }
 else{
-    $erreur = "Manque de paramètres.";
+    $erreur = "Manque de paramï¿½tres.";
     echo json_encode(["error" => utf8_encode($erreur)], JSON_UNESCAPED_UNICODE);
 }
 
