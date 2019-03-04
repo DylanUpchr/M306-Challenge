@@ -3,7 +3,7 @@ require_once '../../../../main.php';
 use App\User;
 
 $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
-$password = password_hash(filter_input(INPUT_POST, 'password'), PASSWORD_DEFAULT);
+$password = filter_input(INPUT_POST, 'password');
 $firstName = filter_input(INPUT_POST, 'first_name', FILTER_SANITIZE_STRING);
 $lastName = filter_input(INPUT_POST, 'last_name', FILTER_SANITIZE_STRING);
 
