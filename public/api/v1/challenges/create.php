@@ -35,7 +35,7 @@ if (!empty($token) && !empty($challengeName)) {
     Reply([
         'status' => 'error',
         'errors' => [
-            PARAM_CHALLENGE_NAME.' is required'
+            'Missing name or token'
         ]
     ]);
 }
