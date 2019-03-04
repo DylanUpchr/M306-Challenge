@@ -20,7 +20,7 @@ if (!empty($token) && $gameId and $challengeId) {
     Reply([
         'status' => 'error',
         'errors' => [
-            PARAM_CHALLENGE_NAME.' is required'
+            PARAM_CHALLENGE_ID.' is required'
         ]
     ]);
 }
