@@ -46,6 +46,7 @@ if (empty($errors)) {
             'User successfully registered'
         ],
         'access_token' => $user->accessToken,
+        'username' => $user->username,
     ]);
 } else {
     echo json_encode([
