@@ -4,6 +4,9 @@ namespace App;
 
 use App\DB;
 
+/**
+ * Challenge model.
+ */
 class Challenge
 {
     public $id;
@@ -11,6 +14,14 @@ class Challenge
     public $startDate;
     public $endDate;
 
+    /**
+     * Default constructor.
+     *
+     * @param int $id
+     * @param string $name
+     * @param string $startDate
+     * @param string $endDate
+     */
     public function __construct($id, $name, $startDate, $endDate)
     {
         $this->id = $id;
@@ -19,6 +30,12 @@ class Challenge
         $this->endDate = $endDate;
     }
 
+    /**
+     * Easy way to create instance from data array.
+     *
+     * @param array $data
+     * @return Challenge|null
+     */
     public static function factory($data)
     {
         if (empty($data)) {
@@ -28,6 +45,12 @@ class Challenge
         return new Challenge($data['id'], $data['name'], $data['start_date'], $data['end_date']);
     }
 
+    /**
+     * Find a challenge by id.
+     *
+     * @param int $id
+     * @return Challenge|null
+     */
     public static function find($id) 
     {
         return self::factory(DB::run('SELECT * FROM challenges WHERE id = ? LIMIT 1', $id)[0] ?? null) ?? null;

@@ -4,6 +4,11 @@ use App\{DB, Score, Challenge, Game, User};
 
 $errors = [];
 
+/**
+ * Validate score.
+ *
+ * @return int|null
+ */
 function validateScore() {
     global $errors;
 
@@ -17,6 +22,11 @@ function validateScore() {
     return $score;
 }
 
+/**
+ * Validate challenge.
+ *
+ * @return Challenge|null
+ */
 function validateChallenge() {
     global $errors;
 
@@ -37,6 +47,11 @@ function validateChallenge() {
     return $challenge;
 }
 
+/**
+ * Validate game.
+ *
+ * @return Game|null
+ */
 function validateGame() {
     global $errors;
 
@@ -57,6 +72,11 @@ function validateGame() {
     return $game;
 }
 
+/**
+ * Validate user.
+ *
+ * @return User|null
+ */
 function validateUser() {
     global $errors;
 

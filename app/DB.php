@@ -3,6 +3,9 @@ namespace App;
 
 use PDO;
 
+/**
+ * DB model.
+ */
 class DB extends PDO
 {
     private static $instance;
