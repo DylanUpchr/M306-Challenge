@@ -1,9 +1,14 @@
 <?php
+/**
+* @author Florian Burgener <florian.brgnr@eduge.ch>, Ismael Adda <ismael.add@eduge.ch>,  Jules Bursik <jules.brsk@eduge.ch>
+* @version 1.0.0
+*/
+
 require_once '../../../../main.php';
 use App\User;
 
 $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
-$password = password_hash(filter_input(INPUT_POST, 'password'), PASSWORD_DEFAULT);
+$password = filter_input(INPUT_POST, 'password');
 $firstName = filter_input(INPUT_POST, 'first_name', FILTER_SANITIZE_STRING);
 $lastName = filter_input(INPUT_POST, 'last_name', FILTER_SANITIZE_STRING);
 
