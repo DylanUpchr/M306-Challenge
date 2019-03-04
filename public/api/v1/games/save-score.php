@@ -97,6 +97,7 @@ function validateUser() {
     return $user;
 }
 
+// Validate parameters.
 $score = validateScore();
 $challenge = validateChallenge();
 $game = validateUser();
@@ -104,7 +105,7 @@ $user = validateUser();
 
 header('Content-Type: application/json;charset=utf-8');
 
-if (empty($errors)) {
+if (empty($errors)) {    
     Score::create($score, $challenge, $game, $user);
 
     echo json_encode([

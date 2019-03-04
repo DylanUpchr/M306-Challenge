@@ -6,6 +6,7 @@ $username = filter_input(INPUT_GET, 'username', FILTER_SANITIZE_STRING);
 $password = filter_input(INPUT_GET, 'password');
 $errors = [];
 
+// Validate parameters.
 if (!$username) {
     $errors[] = 'Missing parameter username';
 }
@@ -17,7 +18,7 @@ if (!$password) {
 if ($username && $password) {
     $user = User::findByUsername($username);
 
-    if (!$user || !password_verify($password, $user->password)) {
+    if (!$user || !password_verify($password, $user->password)) {        
         $errors[] = 'Wrong username or password';
     } else {
         $successes = ['User successfully logged'];
