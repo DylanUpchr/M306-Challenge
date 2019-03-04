@@ -6,8 +6,8 @@
 require_once '../../../../main.php';
 use App\DB;
 
-$idChallenge = filter_input(INPUT_GET, 'challenge_id', FILTER_VALIDATE_INT);
-$token = filter_input(INPUT_GET, 'token', FILTER_SANITIZE_STRING);
+$idChallenge = filter_input(INPUT_POST, 'challenge_id', FILTER_VALIDATE_INT);
+$token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
 
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: Content-type');
@@ -39,5 +39,5 @@ if ($idChallenge && !empty($token)) {
     */
     echo json_encode($response);
 }else{
-    echo json_encode(['error' => 'missing id or token']);
+    echo json_encode(['status' => 'error', 'error' => 'missing id or token']);
 }
