@@ -10,6 +10,7 @@ define('PARAM_CHALLENGE_ID', 'challengeId');
 define('PARAM_USER_ID', 'userId');
 define('PARAM_ADMIN_ID', 'adminId');
 
+//Params
 $token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
 $userId = filter_input(INPUT_POST, PARAM_USER_ID, FILTER_VALIDATE_INT);
 $adminId = filter_input(INPUT_POST, PARAM_ADMIN_ID, FILTER_VALIDATE_INT);
@@ -19,24 +20,27 @@ header('Content-Type: application/json;charset=utf-8');
 //Check token, userId and challengeId
 if (!empty($token) and $userId and $adminId and $challengeId) {
     try {
-        //code...
+        //Insert link between challenge and user
         DB::run('INSERT INTO challenge_user (challenge_id, user_id, admin) VALUES (?, ?, ?)', $challengeId, $userId, $adminId);
     } catch (\Throwable $th) {
+        //Catch DB error
     Reply([
         'status' => 'error',
         'errors' => [
-            $th
+            'Database error occured.'
         ]
     ]);
     }
+    //Success
     Reply([
         'status' => 'success'
     ]);
 }else{
+    //Catch param error
     Reply([
         'status' => 'error',
         'errors' => [
-            PARAM_CHALLENGE_ID . ' and ' . PARAM_USER_ID . ' are required'
+            PARAM_CHALLENGE_ID . ', ' . PARAM_ADMIN_ID . ' and ' . PARAM_USER_ID . ' are required'
         ]
     ]);
 }
