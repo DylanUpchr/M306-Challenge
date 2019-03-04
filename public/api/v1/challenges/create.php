@@ -24,12 +24,12 @@ header('Content-type: application/json; charset=utf-8');
 if (!empty($token) && !empty($challengeName)) {
     // Insertion d'un nouveau challenge dans la base
     DB::run('INSERT INTO challenges (name, start_date, end_date) VALUES ("'.$challengeName.'", NOW(), NOW() + '.DUREE_CHALLENGE.')');
-    Reply([
+    reply([
         'status' => 'success'
     ]);
 }else{
     // Répondre une erreur
-    Reply([
+    reply([
         'status' => 'error',
         'errors' => [
             'Missing name or token'
@@ -61,7 +61,7 @@ if (!empty($token) && !empty($challengeName)) {
  * }
  * @return void
  */
-function Reply($response){
+function reply($response){
     echo json_encode($response);
     exit;
 }
