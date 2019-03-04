@@ -14,8 +14,8 @@ define('PARAM_TOKEN_NAME', 'token');
 define('DUREE_CHALLENGE', 1000000); //timestamp actuellement 1jour
 
 // Filtrage des paramètre get
-$challengeName = filter_input(INPUT_GET, PARAM_CHALLENGE_NAME, FILTER_SANITIZE_STRING);
-$token = filter_input(INPUT_GET, PARAM_TOKEN_NAME, FILTER_SANITIZE_STRING);
+$challengeName = filter_input(INPUT_POST, PARAM_CHALLENGE_NAME, FILTER_SANITIZE_STRING);
+$token = filter_input(INPUT_POST, PARAM_TOKEN_NAME, FILTER_SANITIZE_STRING);
 
 // Autorise les requêtes venant des tiers et défini l'encodage (utf-8) et le type de contenu (json)
 header('Access-Control-Allow-Origin: *');

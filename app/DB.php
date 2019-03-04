@@ -1,4 +1,9 @@
 <?php
+/**
+* @author Florian Burgener <florian.brgnr@eduge.ch>
+* @version 1.0.0
+*/
+
 namespace App;
 
 use PDO;
