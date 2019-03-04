@@ -6,7 +6,6 @@ $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
 $password = password_hash(filter_input(INPUT_POST, 'password'), PASSWORD_DEFAULT);
 $firstName = filter_input(INPUT_POST, 'first_name', FILTER_SANITIZE_STRING);
 $lastName = filter_input(INPUT_POST, 'last_name', FILTER_SANITIZE_STRING);
-$accessToken = sha1(uniqid());
 
 $errors = [];
 
