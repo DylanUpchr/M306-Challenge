@@ -1,6 +1,6 @@
 <?php
-require_once(__DIR__.'/../../../../main.php');
-USE App\DB;
+require_once '../../../../main.php';
+use App\DB;
 
 $idChallenge = filter_input(INPUT_GET, 'challenge_id', FILTER_VALIDATE_INT);
 $token = filter_input(INPUT_GET, 'token', FILTER_SANITIZE_STRING);

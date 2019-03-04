@@ -35,6 +35,14 @@ class User
     {
         return self::factory(DB::run('SELECT * FROM users WHERE id = ? LIMIT 1', $id)[0] ?? null) ?? null;
 	}
+	
+	public function generateNewAccessToken() 
+	{
+		$accessToken = self::getNewAccessToken();
+		DB::run('UPDATE users SET access_token = ? WHERE id = ?', $accessToken, $this->id);
+		$this->accessToken = $accessToken;
+		return $accessToken;
+	}
 
 	public static function findByAccessToken($accessToken) 
     {
@@ -49,11 +57,18 @@ class User
 	public static function create($username, $password, $firstName, $lastName)
 	{
 		$password = password_hash($password, PASSWORD_DEFAULT);
-		$accessToken = sha1(uniqid());
+		$accessToken = self::getNewAccessToken();
 
 		DB::run('INSERT INTO users(username, password, first_name, last_name, access_token) VALUES (?, ?, ?, ?, ?)',
 			$username, $password, $firstName, $lastName, $accessToken
 		);
+
+		return self::find(DB::getInstance()->lastInsertId());
+	}
+
+	private static function getNewAccessToken() 
+	{
+		return sha1(uniqid());
 	}
 
 	/**

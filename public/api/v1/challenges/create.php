@@ -1,6 +1,6 @@
 <?php
-require_once(__DIR__.'/../../../../main.php');
-USE App\DB;
+require_once '../../../../main.php';
+use App\DB;
 
 // Nom du paramètre d'entrée en get
 define('PARAM_CHALLENGE_NAME', 'name');

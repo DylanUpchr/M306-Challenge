@@ -1,6 +1,6 @@
 <?php
-require_once(__DIR__.'/../../../../main.php');
-USE App\DB;
+require_once '../../../../main.php';
+use App\DB;
 
 define('PARAM_CHALLENGE_ID', 'challengeId');
 define('PARAM_GAME_ID', 'gameId');

@@ -1,30 +1,39 @@
 <?php
-require_once "../../../../main.php";
-use App\DB;
+require_once '../../../../main.php';
+use App\{DB, User};
 
 $username = filter_input(INPUT_GET, 'username', FILTER_SANITIZE_STRING);
 $password = filter_input(INPUT_GET, 'password');
+$errors = [];
 
-$erreur = "";
+if (!$username) {
+    $errors[] = 'Missing parameter username';
+}
+
+if (!$password) {
+    $errors[] = 'Missing parameter password';
+}
+
+if ($username && $password) {
+    $user = User::findByUsername($username);
+
+    if (!$user || !password_verify($password, $user->password)) {
+        $errors[] = 'Wrong username or password';
+    } else {
+        $successes = ['User successfully logged'];
+        $user->generateNewAccessToken();
+    }
+}
 
 header('Content-Type: application/json;charset=utf-8');
 
-
-if (!empty($username) && !empty($password)){
-  $data = DB::run('SELECT `access_token`,`password` from users where `username`=?', $username);
-
-  if(password_verify($password, $data[0]["password"])) {    
-      //token user
-    echo json_encode(["token" => $data[0]["access_token"]]);
-    }
-    else{
-        //erreur 
-        $erreur = "L'utilisateur ou le mot de passe est inconnu.";
-        echo json_encode(["error" => utf8_encode($erreur)], JSON_UNESCAPED_UNICODE);
-    }
+if (empty($errors)) {
+    echo json_encode([        
+        'successes' => $successes,
+        'access_token' => $user->accessToken,
+    ]);
+} else {
+    echo json_encode([
+        'errors' => $errors,
+    ]);
 }
-else{
-    $erreur = "Manque de parametres";
-    echo json_encode(["error" => utf8_encode($erreur)], JSON_UNESCAPED_UNICODE);
-}
-
