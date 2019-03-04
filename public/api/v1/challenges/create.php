@@ -1,10 +1,8 @@
 <?php
 /**
-* @author M306-Challenge <jules.sthl@eduge.ch>
+* @author Jules Stahli <jules.sthl@eduge.ch>, Florian Burgener <florian.brgnr@eduge.ch>, Ismael Adda <ismael.add@eduge.ch>
 * @version 1.0.0
 */
-
-
 require_once '../../../../main.php';
 use App\DB;
 

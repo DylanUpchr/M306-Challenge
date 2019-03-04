@@ -1,10 +1,15 @@
 <?php
+/**
+* @author Florian Burgener <florian.brgnr@eduge.ch>, Ismael Adda <ismael.add@eduge.ch>, Jules Stahli <jules.sthl@eduge.ch>
+* @version 1.0.0
+*/
 require_once '../../../../main.php';
 use App\DB;
 
 $idChallenge = filter_input(INPUT_GET, 'challenge_id', FILTER_VALIDATE_INT);
 $token = filter_input(INPUT_GET, 'token', FILTER_SANITIZE_STRING);
 
+header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json;charset=utf-8');
 
 if ($idChallenge && !empty($token)) {

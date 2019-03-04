@@ -31,6 +31,7 @@ if ($username && $password) {
     }
 }
 
+header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json;charset=utf-8');
 
 if (empty($errors)) {
