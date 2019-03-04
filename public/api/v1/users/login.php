@@ -2,8 +2,8 @@
 require_once '../../../../main.php';
 use App\{DB, User};
 
-$username = filter_input(INPUT_GET, 'username', FILTER_SANITIZE_STRING);
-$password = filter_input(INPUT_GET, 'password');
+$username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
+$password = filter_input(INPUT_POST, 'password');
 $errors = [];
 
 if (!$username) {
