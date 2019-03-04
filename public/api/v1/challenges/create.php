@@ -19,7 +19,6 @@ $token = filter_input(INPUT_POST, PARAM_TOKEN_NAME, FILTER_SANITIZE_STRING);
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: Content-type');
 header('Content-type: application/json; charset=utf-8');
-header('Access-Control-Allow-Methods: GET, POST');
 
 // vérification des conditions de traitement
 if (!empty($token) && !empty($challengeName)) {

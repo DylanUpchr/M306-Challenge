@@ -32,7 +32,8 @@ if ($username && $password) {
 }
 
 header('Access-Control-Allow-Origin: *');
-header('Content-Type: application/json;charset=utf-8');
+header('Access-Control-Allow-Headers: Content-type');
+header('Content-type: application/json; charset=utf-8');
 
 if (empty($errors)) {
     echo json_encode([        

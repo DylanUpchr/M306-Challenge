@@ -20,7 +20,6 @@ $challengeId = filter_input(INPUT_GET, PARAM_CHALLENGE_ID, FILTER_VALIDATE_INT);
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: Content-type');
 header('Content-type: application/json; charset=utf-8');
-header('Access-Control-Allow-Methods: GET, POST');
 
 // vérification des conditions de traitement
 if (!empty($token) && $gameId and $challengeId) {

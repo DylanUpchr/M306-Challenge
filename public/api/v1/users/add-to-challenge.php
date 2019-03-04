@@ -18,7 +18,8 @@ $adminId = filter_input(INPUT_POST, PARAM_ADMIN_ID, FILTER_VALIDATE_INT);
 $challengeId = filter_input(INPUT_POST, PARAM_CHALLENGE_ID, FILTER_VALIDATE_INT);
 
 header('Access-Control-Allow-Origin: *');
-header('Content-Type: application/json;charset=utf-8');
+header('Access-Control-Allow-Headers: Content-type');
+header('Content-type: application/json; charset=utf-8');
 //Check token, userId and challengeId
 if (!empty($token) and $userId and $adminId and $challengeId) {
     try {

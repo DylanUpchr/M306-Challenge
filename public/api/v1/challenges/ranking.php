@@ -10,7 +10,8 @@ $idChallenge = filter_input(INPUT_GET, 'challenge_id', FILTER_VALIDATE_INT);
 $token = filter_input(INPUT_GET, 'token', FILTER_SANITIZE_STRING);
 
 header('Access-Control-Allow-Origin: *');
-header('Content-Type: application/json;charset=utf-8');
+header('Access-Control-Allow-Headers: Content-type');
+header('Content-type: application/json; charset=utf-8');
 
 if ($idChallenge && !empty($token)) {
     $response = DB::run('SELECT * FROM chalenges WHERE `id`=?', $idChallenge);
