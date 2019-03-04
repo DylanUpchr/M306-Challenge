@@ -5,9 +5,9 @@ use App\DB;
 define('PARAM_CHALLENGE_ID', 'challengeId');
 define('PARAM_GAME_ID', 'gameId');
 
-$token = filter_input(INPUT_GET, 'token', FILTER_SANITIZE_STRING);
-$gameId = filter_input(INPUT_GET, PARAM_GAME_ID, FILTER_VALIDATE_INT);
-$challengeId = filter_input(INPUT_GET, PARAM_CHALLENGE_ID, FILTER_VALIDATE_INT);
+$token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
+$gameId = filter_input(INPUT_POST, PARAM_GAME_ID, FILTER_VALIDATE_INT);
+$challengeId = filter_input(INPUT_POST, PARAM_CHALLENGE_ID, FILTER_VALIDATE_INT);
 
 header('Content-Type: application/json;charset=utf-8');
 
