@@ -21,7 +21,7 @@ header('Content-Type: application/json;charset=utf-8');
 if (!empty($token) and $userId and $adminId and $challengeId) {
     try {
         //code...
-        DB::run('INSERT INTO challenge_user (challenge_id, user_id) VALUES ('.$challengeId.', '.$userId.')');
+        DB::run('INSERT INTO challenge_user (challenge_id, user_id, admin) VALUES ('.$challengeId.', '.$userId.', ' .$adminId.')');
     } catch (\Throwable $th) {
     Reply([
         'status' => 'error',
