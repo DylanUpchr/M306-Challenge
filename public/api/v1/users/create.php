@@ -1,12 +1,16 @@
 <?php
+/**
+* @author Florian Burgener <florian.brgnr@eduge.ch>, Ismael Adda <ismael.add@eduge.ch>,  Jules Bursik <jules.brsk@eduge.ch>
+* @version 1.0.0
+*/
+
 require_once '../../../../main.php';
 use App\User;
 
 $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
-$password = password_hash(filter_input(INPUT_POST, 'password'), PASSWORD_DEFAULT);
+$password = filter_input(INPUT_POST, 'password');
 $firstName = filter_input(INPUT_POST, 'first_name', FILTER_SANITIZE_STRING);
 $lastName = filter_input(INPUT_POST, 'last_name', FILTER_SANITIZE_STRING);
-$accessToken = sha1(uniqid());
 
 $errors = [];
 
@@ -30,7 +34,9 @@ if (!$lastName) {
     $errors[] = 'Missing parameter last_name';
 }
 
-header('Content-Type: application/json;charset=utf-8');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Headers: Content-type');
+header('Content-type: application/json; charset=utf-8');
 
 if (empty($errors)) {
     $user = User::create($username, $password, $firstName, $lastName);
@@ -40,6 +46,7 @@ if (empty($errors)) {
             'User successfully registered'
         ],
         'access_token' => $user->accessToken,
+        'username' => $user->username,
     ]);
 } else {
     echo json_encode([

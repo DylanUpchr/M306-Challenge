@@ -1,9 +1,19 @@
 <?php
+/**
+* @author Florian Burgener <florian.brgnr@eduge.ch>, Ismael Adda <ismael.add@eduge.ch>,  Jules Bursik <jules.brsk@eduge.ch>
+* @version 1.0.0
+*/
+
 require_once '../../../../main.php';
 use App\{DB, Score, Challenge, Game, User};
 
 $errors = [];
 
+/**
+ * Validate score.
+ *
+ * @return int|null
+ */
 function validateScore() {
     global $errors;
 
@@ -17,6 +27,11 @@ function validateScore() {
     return $score;
 }
 
+/**
+ * Validate challenge.
+ *
+ * @return Challenge|null
+ */
 function validateChallenge() {
     global $errors;
 
@@ -37,6 +52,11 @@ function validateChallenge() {
     return $challenge;
 }
 
+/**
+ * Validate game.
+ *
+ * @return Game|null
+ */
 function validateGame() {
     global $errors;
 
@@ -57,6 +77,11 @@ function validateGame() {
     return $game;
 }
 
+/**
+ * Validate user.
+ *
+ * @return User|null
+ */
 function validateUser() {
     global $errors;
 
@@ -77,14 +102,17 @@ function validateUser() {
     return $user;
 }
 
+// Validate parameters.
 $score = validateScore();
 $challenge = validateChallenge();
 $game = validateUser();
 $user = validateUser();
 
-header('Content-Type: application/json;charset=utf-8');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Headers: Content-type');
+header('Content-type: application/json; charset=utf-8');
 
-if (empty($errors)) {
+if (empty($errors)) {    
     Score::create($score, $challenge, $game, $user);
 
     echo json_encode([

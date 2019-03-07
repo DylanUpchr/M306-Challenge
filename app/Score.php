@@ -1,9 +1,16 @@
 <?php
+/**
+* @author Florian Burgener <florian.brgnr@eduge.ch>, Ismael Adda <ismael.add@eduge.ch>
+* @version 1.0.0
+*/
 
 namespace App;
 
 use App\{DB, Challenge, Game, User};
 
+/**
+ * Score model.
+ */
 class Score 
 {
     public $id;
@@ -12,6 +19,15 @@ class Score
     public $gameId;
     public $userId;
 
+    /**
+     * Default constructor.
+     *
+     * @param int $id
+     * @param int $score
+     * @param int $challengeId
+     * @param int $gameId
+     * @param int $userId
+     */
     public function __construct($id, $score, $challengeId, $gameId, $userId)
     {
         $this->id = $id;
@@ -21,6 +37,12 @@ class Score
         $this->userId = $userId;
     }
 
+    /**
+     * Easy way to create instance from data array.
+     *
+     * @param array $data
+     * @return User|null
+     */
     public static function factory($data)
     {
         if (empty($data)) {
@@ -30,11 +52,26 @@ class Score
         return new Score($data['id'], $data['score'], $data['challenge_id'], $data['game_id'], $data['user_id']);
     }
 
+    /**
+     * Find a score by id.
+     *
+     * @param int $id
+     * @return Score|null
+     */
     public static function find($id) 
     {
         return self::factory(DB::run('SELECT * FROM scores WHERE id = ? LIMIT 1', $id)[0] ?? null) ?? null;
     }
 
+    /**
+     * Create a score.
+     *
+     * @param int $score
+     * @param Challenge $challenge
+     * @param Game $game
+     * @param User $user
+     * @return void
+     */
     public static function create($score, Challenge $challenge, Game $game, User $user)
     {
         DB::run('INSERT INTO scores(score, challenge_id, game_id, user_id) VALUES (?, ?, ?, ?)',

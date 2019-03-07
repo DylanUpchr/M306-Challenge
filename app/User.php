@@ -1,8 +1,16 @@
 <?php
+/**
+* @author Florian Burgener <florian.brgnr@eduge.ch>, Ismael Adda <ismael.add@eduge.ch>, Jules Bursik <jules.brsk@eduge.ch>
+* @version 1.0.0
+*/
+
 namespace App;
 
 use App\DB;
 
+/**
+ * User model.
+ */
 class User
 {
 	public $id;
@@ -12,6 +20,16 @@ class User
 	public $lastName;
 	public $accessToken;
 
+	/**
+	 * Default constructor.
+	 *
+	 * @param int $id
+	 * @param string $username
+	 * @param string $password
+	 * @param string $firstName
+	 * @param string $lastName
+	 * @param string $accessToken
+	 */
     public function __construct($id, $username, $password, $firstName, $lastName, $accessToken)
     {
 		$this->id = $id;
@@ -22,6 +40,12 @@ class User
 		$this->accessToken = $accessToken;
     }
 
+	/**
+	 * Easy way to create instance from data array.
+	 *
+	 * @param array $data
+	 * @return User|null
+	 */
     public static function factory($data)
     {
 		if (empty($data)) {
@@ -31,11 +55,22 @@ class User
         return new User($data['id'], $data['username'], $data['password'], $data['first_name'], $data['last_name'], $data['access_token']);
     }
 
+	/**
+	 * Find a user by id.
+	 *
+	 * @param int $id
+	 * @return User|null
+	 */
     public static function find($id) 
     {
         return self::factory(DB::run('SELECT * FROM users WHERE id = ? LIMIT 1', $id)[0] ?? null) ?? null;
 	}
 	
+	/**
+	 * Generate a new access token.
+	 *
+	 * @return string
+	 */
 	public function generateNewAccessToken() 
 	{
 		$accessToken = self::getNewAccessToken();
@@ -44,16 +79,37 @@ class User
 		return $accessToken;
 	}
 
+	/**
+	 * Find a user by access token.
+	 *
+	 * @param string $accessToken
+	 * @return User|null
+	 */
 	public static function findByAccessToken($accessToken) 
     {
         return self::factory(DB::run('SELECT * FROM users WHERE access_token = ? LIMIT 1', $accessToken)[0] ?? null) ?? null;
 	}
 
+	/**
+	 * Find a user by username.
+	 *
+	 * @param string $username
+	 * @return User|null
+	 */
 	public static function findByUsername($username)
 	{
 		return self::factory(DB::run('SELECT * FROM users WHERE username = ? LIMIT 1', $username)[0] ?? null) ?? null;
 	}
 
+	/**
+	 * Create a user.
+	 *
+	 * @param string $username
+	 * @param string $password
+	 * @param string $firstName
+	 * @param string $lastName
+	 * @return User
+	 */
 	public static function create($username, $password, $firstName, $lastName)
 	{
 		$password = password_hash($password, PASSWORD_DEFAULT);
@@ -66,13 +122,21 @@ class User
 		return self::find(DB::getInstance()->lastInsertId());
 	}
 
+	/**
+	 * Get a new acces token generate as pseudo random unique.
+	 *
+	 * @return string
+	 */
 	private static function getNewAccessToken() 
 	{
 		return sha1(uniqid());
 	}
 
 	/**
-	 * Depricated.
+	 * Get a user id by token (deprecated).	 
+	 *
+	 * @param string $token
+	 * @return User|null
 	 */
 	public static function getIdUser($token)
 	{
