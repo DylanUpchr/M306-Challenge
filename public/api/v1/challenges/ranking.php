@@ -1,6 +1,6 @@
 <?php
 /**
-* @author Florian Burgener <florian.brgnr@eduge.ch>, Jules Stahli <jules.sthl@eduge.ch>
+* @author Florian Burgener <florian.brgnr@eduge.ch>, Jules Stahli <jules.sthl@eduge.ch>, Jules Bursik <jules.brsk@eduge.ch>
 * @version 1.0.0
 */
 require_once '../../../../main.php';
