@@ -5,10 +5,11 @@
 */
 require_once '../../../../main.php';
 use App\DB;
+use App\User;
 
 // Nom du paramètre d'entrée en get
 define('PARAM_CHALLENGE_NAME', 'name');
-define('PARAM_TOKEN_NAME', 'token');
+define('PARAM_TOKEN_NAME', 'access_token');
 define('DUREE_CHALLENGE', 1000000); //timestamp actuellement 1jour
 
 // Filtrage des paramètre get
@@ -21,11 +22,20 @@ header('Access-Control-Allow-Headers: Content-type');
 header('Content-type: application/json; charset=utf-8');
 
 // vérification des conditions de traitement
-if (!empty($token) && !empty($challengeName)) {
+$user = User::findByAccessToken($token);
+if ($user && !empty($challengeName)) {
     // Insertion d'un nouveau challenge dans la base
     DB::run('INSERT INTO challenges (name, start_date, end_date) VALUES ("'.$challengeName.'", NOW(), NOW() + '.DUREE_CHALLENGE.')');
     reply([
         'status' => 'success'
+    ]);
+}else if($user === null){
+
+    reply([
+        'status' => 'error',
+        'errors' => [
+            'Invalid token'
+        ]
     ]);
 }else{
     // Répondre une erreur

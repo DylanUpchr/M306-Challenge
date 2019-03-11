@@ -5,17 +5,19 @@
 */
 require_once '../../../../main.php';
 use App\DB;
+use App\User;
 
-$idChallenge = filter_input(INPUT_POST, 'challenge_id', FILTER_VALIDATE_INT);
-$token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
+$idChallenge = filter_input(INPUT_POST, 'challengeId', FILTER_VALIDATE_INT);
+$token = filter_input(INPUT_POST, 'access_token', FILTER_SANITIZE_STRING);
 
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: Content-type');
 header('Content-type: application/json; charset=utf-8');
 
-if ($idChallenge && !empty($token)) {
+$user = User::findByAccessToken($token);
+if ($idChallenge && $user) {
     // récupère le challenge demande
-    $response = DB::run('SELECT * FROM chalenges WHERE `id`=?', $idChallenge);
+    $response = DB::run('SELECT * FROM challenges WHERE `id`=?', $idChallenge);
     // ajoute au challenge les jeux du challenege dans la propriété games
     $response['games'] = DB::run('SELECT games.id AS id, games.name AS name FROM challenge_game INNER JOIN games ON challenge_game.game_id = games.id WHERE challenge_game=?', $idChallenge);
     // pour chaque jeux récpère les scores des joueurs par ordre décroissant du score et l'ajoute à la propirété ranking du jeux
@@ -38,6 +40,8 @@ if ($idChallenge && !empty($token)) {
     }
     */
     echo json_encode($response);
+}else if($user === null){
+    echo json_encode(['status' => 'error', 'error' => 'Invalid token']);
 }else{
     echo json_encode(['status' => 'error', 'error' => 'missing id or token']);
 }
