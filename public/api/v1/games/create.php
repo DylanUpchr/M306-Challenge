@@ -24,17 +24,11 @@ header('Content-type: application/json; charset=utf-8');
 // vérification des conditions de traitement
 if (!empty($token) && !empty($gameName)) {
     if (USER::findByAccessToken($token) != null) {
-        try {
-            DB::run('INSERT INTO games (name) VALUES (?)', $gameName);
+            DB::run('INSERT INTO games (name) VALUES ("?")', $gameName);
             reply([
                 'status' => 'success'
             ]);
-        } catch (\Error $e) {
-            reply([
-                'status' => 'error',
-                'errors' => ['SQL error']
-            ]);
-        }
+       
     }else{
         reply([
             'status' => 'error',
