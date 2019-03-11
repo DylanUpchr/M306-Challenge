@@ -5,6 +5,7 @@
 */
 require_once '../../../../main.php';
 use App\DB;
+use App\User;
 
 // Nom des paramètres d'entrée en get
 

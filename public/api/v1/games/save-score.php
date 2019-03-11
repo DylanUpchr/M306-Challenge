@@ -35,19 +35,19 @@ function validateScore() {
 function validateChallenge() {
     global $errors;
 
-    $challengeId = filter_input(INPUT_POST, 'challenge_id', FILTER_VALIDATE_INT);
+    $challengeId = filter_input(INPUT_POST, 'challengeId', FILTER_VALIDATE_INT);
 
     if (!$challengeId) {
         $errors[] = 'Missing parameter challenge_id';
         return null;
-    } 
-    
+    }
+
     $challenge = Challenge::find($challengeId);
-    
+
     if (!$challenge) {
         $errors[] = 'Cannot find challenge from challenge_id value';
         return null;
-    }    
+    }
 
     return $challenge;
 }
@@ -60,17 +60,17 @@ function validateChallenge() {
 function validateGame() {
     global $errors;
 
-    $gameId = filter_input(INPUT_POST, 'game_id', FILTER_VALIDATE_INT);
-    
+    $gameId = filter_input(INPUT_POST, 'gameId', FILTER_VALIDATE_INT);
+
     if (!$gameId) {
         $errors[] = 'Missing parameter game_id';
         return null;
-    } 
+    }
 
     $game = Game::find($gameId);
 
     if (!$game) {
-        $errors[] = 'Cannot find challenge from game_id value'; 
+        $errors[] = 'Cannot find challenge from game_id value';
         return null;
     }
 
@@ -90,10 +90,10 @@ function validateUser() {
     if (!$accessToken) {
         $errors[] = 'Missing parameter access_token';
         return null;
-    } 
+    }
 
     $user = User::findByAccessToken($accessToken);
-    
+
     if (!$user) {
         $errors[] = 'Cannot find user from access_token value';
         return null;
@@ -112,7 +112,7 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: Content-type');
 header('Content-type: application/json; charset=utf-8');
 
-if (empty($errors)) {    
+if (empty($errors)) {
     Score::create($score, $challenge, $game, $user);
 
     echo json_encode([
