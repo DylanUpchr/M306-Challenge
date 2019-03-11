@@ -7,7 +7,7 @@ require_once '../../../../main.php';
 use App\DB;
 use App\User;
 
-$idChallenge = filter_input(INPUT_POST, 'challengeId', FILTER_VALIDATE_INT);
+$idChallenge = filter_input(INPUT_POST, 'challenge_id', FILTER_VALIDATE_INT);
 $token = filter_input(INPUT_POST, 'access_token', FILTER_SANITIZE_STRING);
 
 header('Access-Control-Allow-Origin: *');
