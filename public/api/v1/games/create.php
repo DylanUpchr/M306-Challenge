@@ -1,20 +1,19 @@
 <?php
 /**
-* @author Jules Stahli <jules.sthl@eduge.ch>, Florian Burgener <florian.brgnr@eduge.ch>, Ismael Adda <ismael.add@eduge.ch>
+* @author Jules Stahli <jules.sthl@eduge.ch>
 * @version 1.0.0
 */
 require_once '../../../../main.php';
 use App\DB;
-use App\User;
 
-// Nom du paramètre d'entrée en get
-define('PARAM_CHALLENGE_NAME', 'name');
+// Nom des paramètres d'entrée en get
+
 define('PARAM_TOKEN_NAME', 'access_token');
-define('DUREE_CHALLENGE', 1000000); //timestamp actuellement 1jour
+define('PARAM_GAME_NAME', 'gameName');
 
-// Filtrage des paramètre get
-$challengeName = filter_input(INPUT_POST, PARAM_CHALLENGE_NAME, FILTER_SANITIZE_STRING);
+// Filtrage des entrées
 $token = filter_input(INPUT_POST, PARAM_TOKEN_NAME, FILTER_SANITIZE_STRING);
+$gameName = filter_input(INPUT_POST, PARAM_GAME_NAME, FILTER_SANITIZE_STRING);
 
 // Autorise les requêtes venant des tiers et défini l'encodage (utf-8) et le type de contenu (json)
 header('Access-Control-Allow-Origin: *');
@@ -22,27 +21,30 @@ header('Access-Control-Allow-Headers: Content-type');
 header('Content-type: application/json; charset=utf-8');
 
 // vérification des conditions de traitement
-$user = User::findByAccessToken($token);
-if ($user && !empty($challengeName)) {
-    // Insertion d'un nouveau challenge dans la base
-    DB::run('INSERT INTO challenges (name, start_date, end_date) VALUES ("'.$challengeName.'", NOW(), NOW() + '.DUREE_CHALLENGE.')');
-    reply([
-        'status' => 'success'
-    ]);
-}else if($user === null){
-
+if (!empty($token) && !empty($gameName)) {
+    if (USER::findByAccessToken($token) != null) {
+        try {
+            DB::run('INSERT INTO games (name) VALUES (?)', $gameName);
+            reply([
+                'status' => 'success'
+            ]);
+        } catch (\Error $e) {
+            reply([
+                'status' => 'error',
+                'errors' => ['SQL error']
+            ]);
+        }
+    }else{
+        reply([
+            'status' => 'error',
+            'errors' => ['Invalid access token']
+        ]);
+    }
+} else {
     reply([
         'status' => 'error',
         'errors' => [
-            'Invalid token'
-        ]
-    ]);
-}else{
-    // Répondre une erreur
-    reply([
-        'status' => 'error',
-        'errors' => [
-            'Missing name or token'
+            'Missing game name or token'
         ]
     ]);
 }
@@ -71,7 +73,8 @@ if ($user && !empty($challengeName)) {
  * }
  * @return void
  */
-function reply($response){
+function reply($response)
+{
     echo json_encode($response);
     exit;
 }
