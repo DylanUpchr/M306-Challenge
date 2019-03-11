@@ -1,47 +1,82 @@
 <?php
 /**
-* @author Florian Burgener <florian.brgnr@eduge.ch>, Ismael Adda <ismael.add@eduge.ch>, Jules Stahli <jules.sthl@eduge.ch>
+* @author Florian Burgener <florian.brgnr@eduge.ch>, Jules Stahli <jules.sthl@eduge.ch>
 * @version 1.0.0
 */
 require_once '../../../../main.php';
+
 use App\DB;
 use App\User;
+use App\Challenge;
 
-$idChallenge = filter_input(INPUT_POST, 'challenge_id', FILTER_VALIDATE_INT);
-$token = filter_input(INPUT_POST, 'access_token', FILTER_SANITIZE_STRING);
+/**
+ * Validate user.
+ *
+ * @return User|null
+ */
+function validateUser() {
+    global $errors;
+
+    $accessToken = filter_input(INPUT_GET, 'access_token', FILTER_SANITIZE_STRING);
+
+    if (!$accessToken) {
+        $errors[] = 'Missing parameter access_token';
+        return null;
+    }
+
+    $user = User::findByAccessToken($accessToken);
+
+    if (!$user) {
+        $errors[] = 'Cannot find user from access_token value';
+        return null;
+    }
+
+    return $user;
+}
+
+/**
+ * Validate challenge.
+ *
+ * @return Challenge|null
+ */
+function validateChallenge() {
+    global $errors;
+
+    $challengeId = filter_input(INPUT_GET, 'challenge_id', FILTER_VALIDATE_INT);
+
+    if (!$challengeId) {
+        $errors[] = 'Missing parameter challenge_id';
+        return null;
+    }
+
+    $challenge = Challenge::find($challengeId);
+
+    if (!$challenge) {
+        $errors[] = 'Cannot find challenge from challenge_id value';
+        return null;
+    }
+
+    return $challenge;
+}
+
+$user = validateUser();
+$challenge = validateChallenge();
 
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: Content-type');
 header('Content-type: application/json; charset=utf-8');
 
-$user = User::findByAccessToken($token);
-if ($idChallenge && $user) {
-    // récupère le challenge demande
-    $response = DB::run('SELECT * FROM challenges WHERE `id`=?', $idChallenge);
-    // ajoute au challenge les jeux du challenege dans la propriété games
-    $response['games'] = DB::run('SELECT games.id AS id, games.name AS name FROM challenge_game INNER JOIN games ON challenge_game.game_id = games.id WHERE challenge_game=?', $idChallenge);
-    // pour chaque jeux récpère les scores des joueurs par ordre décroissant du score et l'ajoute à la propirété ranking du jeux
-    foreach ($response['games'] as $game) {
-        $game['ranking'] = DB::run('SELECT scores.user_id AS user_id, users.first_name AS user_first_name, users.last_name AS user_last_name, scores.score AS score FROM scores INNER JOIN users ON scores.user_id = users.id WHERE scores.challenge_id=? AND scores.game_id=? ORDER BY scores.score DESC', $idChallenge, $game['id']);
-    }
-    // retourne la structure de données générée
-    /*
-    {
-        ...,
-        games : [
-            ...,
-            {
-                ...,
-                ranking : [
-                    ...
-                ]
-            }
-        ]
-    }
-    */
-    echo json_encode($response);
-}else if($user === null){
-    echo json_encode(['status' => 'error', 'error' => 'Invalid token']);
-}else{
-    echo json_encode(['status' => 'error', 'error' => 'missing id or token']);
+if (empty($errors)) {
+    $ranking = $challenge->ranking($challenge->id);
+
+    echo json_encode([
+        'successes' => [
+            'Ranking got',
+        ],
+        'ranking' => $ranking,
+    ]);
+} else {
+    echo json_encode([
+        'errors' => $errors,
+    ]);
 }

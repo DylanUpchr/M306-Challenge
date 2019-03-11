@@ -35,6 +35,27 @@ class Challenge
     }
 
     /**
+     * Get ranking of the challenge.
+     *
+     * @return array
+     */
+    public function ranking($challengeId) 
+    {
+        $users =  DB::run('SELECT u.username, u.first_name, u.last_name, SUM(s.score) score FROM users u             
+            INNER JOIN scores s ON s.user_id = u.id        
+            WHERE s.challenge_id = ?
+            GROUP BY s.user_id       
+            ORDER BY score DESC     
+        ', $challengeId);
+
+        for ($i = 0; $i < count($users); $i++) {
+            $users[$i]['score'] = (int)$users[$i]['score'];
+        }
+
+        return $users;
+    }
+
+    /**
      * Easy way to create instance from data array.
      *
      * @param array $data
