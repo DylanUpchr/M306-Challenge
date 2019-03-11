@@ -105,7 +105,7 @@ function validateUser() {
 // Validate parameters.
 $score = validateScore();
 $challenge = validateChallenge();
-$game = validateUser();
+$game = validateGame();
 $user = validateUser();
 
 header('Access-Control-Allow-Origin: *');
