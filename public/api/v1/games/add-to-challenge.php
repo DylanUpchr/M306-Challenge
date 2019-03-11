@@ -23,7 +23,7 @@ header('Content-type: application/json; charset=utf-8');
 
 // vérification des conditions de traitement
 if (!empty($token) && $gameId and $challengeId) {
-    DB::run('INSERT INTO challenge_game (challenge_id, game_id) VALUES ('.$challengeId.', '.$gameId.')');
+    DB::run('INSERT INTO challenge_game (challenge_id, game_id) VALUES (?, ?)',$challengeId, $gameId);
     reply([
         'status' => 'success'
     ]);
