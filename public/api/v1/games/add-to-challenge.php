@@ -8,6 +8,7 @@ require_once '../../../../main.php';
 use App\DB;
 use App\Challenge;
 use App\Game;
+use App\User;
 
 $errors = [];
 
