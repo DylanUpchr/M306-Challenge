@@ -37,14 +37,14 @@ if (!empty($token) && !empty($gameName)) {
     }else{
         reply([
             'status' => 'error',
-            'errors' => ['Missing token']
+            'errors' => ['Invalid access token']
         ]);
     }
 } else {
     reply([
         'status' => 'error',
         'errors' => [
-            'Missing game name'
+            'Missing game name or token'
         ]
     ]);
 }
