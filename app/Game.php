@@ -64,4 +64,9 @@ class Game
     {
         return self::factory(DB::run('SELECT * FROM games WHERE name = ? LIMIT 1', $name)[0] ?? null) ?? null;
     }
+
+    public static function all() 
+    {
+        return DB::run('SELECT id, name FROM games');
+    }
 }
