@@ -17,7 +17,7 @@ header('Content-type: application/json; charset=utf-8');
 $user = User::findByAccessToken($token);
 if ($idChallenge && $user) {
     // récupère le challenge demande
-    $response = DB::run('SELECT * FROM chalenges WHERE `id`=?', $idChallenge);
+    $response = DB::run('SELECT * FROM challenges WHERE `id`=?', $idChallenge);
     // ajoute au challenge les jeux du challenege dans la propriété games
     $response['games'] = DB::run('SELECT games.id AS id, games.name AS name FROM challenge_game INNER JOIN games ON challenge_game.game_id = games.id WHERE challenge_game=?', $idChallenge);
     // pour chaque jeux récpère les scores des joueurs par ordre décroissant du score et l'ajoute à la propirété ranking du jeux
