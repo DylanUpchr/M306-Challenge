@@ -53,4 +53,15 @@ class Game
     {
         return self::factory(DB::run('SELECT * FROM games WHERE id = ? LIMIT 1', $id)[0] ?? null) ?? null;
     }
+
+    /**
+     * Get game by name.
+     *
+     * @param string $name
+     * @return Game|null
+     */
+    public static function findByName($name)
+    {
+        return self::factory(DB::run('SELECT * FROM games WHERE name = ? LIMIT 1', $name)[0] ?? null) ?? null;
+    }
 }
