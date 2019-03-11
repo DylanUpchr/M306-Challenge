@@ -38,14 +38,14 @@ function validateChallenge() {
     $challengeId = filter_input(INPUT_POST, 'challengeId', FILTER_VALIDATE_INT);
 
     if (!$challengeId) {
-        $errors[] = 'Missing parameter challenge_id';
+        $errors[] = 'Missing parameter challengeId';
         return null;
     }
 
     $challenge = Challenge::find($challengeId);
 
     if (!$challenge) {
-        $errors[] = 'Cannot find challenge from challenge_id value';
+        $errors[] = 'Cannot find challenge from challengeId value';
         return null;
     }
 
@@ -63,14 +63,14 @@ function validateGame() {
     $gameId = filter_input(INPUT_POST, 'gameId', FILTER_VALIDATE_INT);
 
     if (!$gameId) {
-        $errors[] = 'Missing parameter game_id';
+        $errors[] = 'Missing parameter gameId';
         return null;
     }
 
     $game = Game::find($gameId);
 
     if (!$game) {
-        $errors[] = 'Cannot find challenge from game_id value';
+        $errors[] = 'Cannot find challenge from gameId value';
         return null;
     }
 
@@ -85,17 +85,17 @@ function validateGame() {
 function validateUser() {
     global $errors;
 
-    $accessToken = filter_input(INPUT_POST, 'access_token', FILTER_SANITIZE_STRING);
+    $accessToken = filter_input(INPUT_POST, 'accessToken', FILTER_SANITIZE_STRING);
 
     if (!$accessToken) {
-        $errors[] = 'Missing parameter access_token';
+        $errors[] = 'Missing parameter accessToken';
         return null;
     }
 
     $user = User::findByAccessToken($accessToken);
 
     if (!$user) {
-        $errors[] = 'Cannot find user from access_token value';
+        $errors[] = 'Cannot find user from accessToken value';
         return null;
     }
 

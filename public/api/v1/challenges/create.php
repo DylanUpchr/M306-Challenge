@@ -9,7 +9,7 @@ use App\User;
 
 // Nom du paramètre d'entrée en get
 define('PARAM_CHALLENGE_NAME', 'name');
-define('PARAM_TOKEN_NAME', 'access_token');
+define('PARAM_TOKEN_NAME', 'accessToken');
 define('DUREE_CHALLENGE', 1000000); //timestamp actuellement 1jour
 
 // Filtrage des paramètre get

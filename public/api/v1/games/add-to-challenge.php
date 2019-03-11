@@ -6,61 +6,101 @@
 require_once '../../../../main.php';
 use App\DB;
 
-// Nom des paramètres d'entrée en get
-define('PARAM_CHALLENGE_ID', 'challengeId');
-define('PARAM_GAME_ID', 'gameId');
-define('PARAM_TOKEN_NAME', 'access_token');
+$errors = [];
 
-// Filtrage des entrées
-$token = filter_input(INPUT_POST, PARAM_TOKEN_NAME, FILTER_SANITIZE_STRING);
-$gameId = filter_input(INPUT_POST, PARAM_GAME_ID, FILTER_VALIDATE_INT);
-$challengeId = filter_input(INPUT_POST, PARAM_CHALLENGE_ID, FILTER_VALIDATE_INT);
+/**
+ * Validate user.
+ *
+ * @return User|null
+ */
+function validateUser() {
+    global $errors;
 
-// Autorise les requêtes venant des tiers et défini l'encodage (utf-8) et le type de contenu (json)
+    $accessToken = filter_input(INPUT_POST, 'accessToken', FILTER_SANITIZE_STRING);
+
+    if (!$accessToken) {
+        $errors[] = 'Missing parameter accessToken';
+        return null;
+    }
+
+    $user = User::findByAccessToken($accessToken);
+
+    if (!$user) {
+        $errors[] = 'Cannot find user from accessToken value';
+        return null;
+    }
+
+    return $user;
+}
+
+/**
+ * Validate game.
+ *
+ * @return Game|null
+ */
+function validateGame() {
+    global $errors;
+
+    $gameId = filter_input(INPUT_POST, 'gameId', FILTER_VALIDATE_INT);
+
+    if (!$gameId) {
+        $errors[] = 'Missing parameter gameId';
+        return null;
+    }
+
+    $game = Game::find($gameId);
+
+    if (!$game) {
+        $errors[] = 'Cannot find challenge from gameId value';
+        return null;
+    }
+
+    return $game;
+}
+
+/**
+ * Validate challenge.
+ *
+ * @return Challenge|null
+ */
+function validateChallenge() {
+    global $errors;
+
+    $challengeId = filter_input(INPUT_POST, 'challengeId', FILTER_VALIDATE_INT);
+
+    if (!$challengeId) {
+        $errors[] = 'Missing parameter challengeId';
+        return null;
+    }
+
+    $challenge = Challenge::find($challengeId);
+
+    if (!$challenge) {
+        $errors[] = 'Cannot find challenge from challengeId value';
+        return null;
+    }
+
+    return $challenge;
+}
+
+$user = validateUser();
+$game = validateGame();
+$challenge = validateChallenge();
+
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: Content-type');
 header('Content-type: application/json; charset=utf-8');
 
-// vérification des conditions de traitement
-if (!empty($token) && $gameId and $challengeId) {
-    DB::run('INSERT INTO challenge_game (challenge_id, game_id) VALUES (?, ?)',$challengeId, $gameId);
-    reply([
-        'status' => 'success'
-    ]);
-}else{
-    reply([
-        'status' => 'error',
-        'errors' => [
-            'Missing parametters gameId or challengeId or token'
-        ]
-    ]);
-}
+if (empty($errors)) {
+    DB::run('INSERT INTO challenge_game(challenge_id, game_id) VALUES (?, ?)', $challenge->id, $game->id);
 
-// functions
-
-/**
- * Affiche les données passée en paramètre sous forme de json et met fin au script
- *
- * @param [array] $response un tableau assissiatif conteant les données a afficher
- * @example Affichage simple
- * $response = [
- *  'status' => 'success',
- *  'other' => [
- *          'data1',
- *          'data2
- *      ]
- * ]
- * ====================>
- * {
- *      "status" = "success",
- *      "other" = [
- *          "data1",
- *          "data2"
- *      ]
- * }
- * @return void
- */
-function reply($response){
-    echo json_encode($response);
-    exit;
+    echo json_encode([
+        'successes' => [
+            'Game added to challenge',
+        ],
+    ]);
+} else {
+    echo json_encode([
+        'errors' => $errors,
+    ]);
 }

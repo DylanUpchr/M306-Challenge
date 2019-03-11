@@ -9,6 +9,8 @@ use App\DB;
 use App\User;
 use App\Challenge;
 
+$errors = [];
+
 /**
  * Validate user.
  *
@@ -17,17 +19,17 @@ use App\Challenge;
 function validateUser() {
     global $errors;
 
-    $accessToken = filter_input(INPUT_GET, 'access_token', FILTER_SANITIZE_STRING);
+    $accessToken = filter_input(INPUT_GET, 'accessToken', FILTER_SANITIZE_STRING);
 
     if (!$accessToken) {
-        $errors[] = 'Missing parameter access_token';
+        $errors[] = 'Missing parameter accessToken';
         return null;
     }
 
     $user = User::findByAccessToken($accessToken);
 
     if (!$user) {
-        $errors[] = 'Cannot find user from access_token value';
+        $errors[] = 'Cannot find user from accessToken value';
         return null;
     }
 
@@ -42,17 +44,17 @@ function validateUser() {
 function validateChallenge() {
     global $errors;
 
-    $challengeId = filter_input(INPUT_GET, 'challenge_id', FILTER_VALIDATE_INT);
+    $challengeId = filter_input(INPUT_GET, 'challengeId', FILTER_VALIDATE_INT);
 
     if (!$challengeId) {
-        $errors[] = 'Missing parameter challenge_id';
+        $errors[] = 'Missing parameter challengeId';
         return null;
     }
 
     $challenge = Challenge::find($challengeId);
 
     if (!$challenge) {
-        $errors[] = 'Cannot find challenge from challenge_id value';
+        $errors[] = 'Cannot find challenge from challengeId value';
         return null;
     }
 

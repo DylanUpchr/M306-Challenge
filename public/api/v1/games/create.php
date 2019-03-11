@@ -9,7 +9,7 @@ use App\User;
 
 // Nom des paramètres d'entrée en get
 
-define('PARAM_TOKEN_NAME', 'access_token');
+define('PARAM_TOKEN_NAME', 'accessToken');
 define('PARAM_GAME_NAME', 'gameName');
 
 // Filtrage des entrées

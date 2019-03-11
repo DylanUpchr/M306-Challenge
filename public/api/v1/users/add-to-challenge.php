@@ -8,8 +8,8 @@ require_once '../../../../main.php';
 use App\DB;
 use App\User;
 
-define('PARAM_CHALLENGE_ID', 'challenge_id');
-define('PARAM_ACCESS_TOKEN', 'access_token');
+define('PARAM_CHALLENGE_ID', 'challengeId');
+define('PARAM_ACCESS_TOKEN', 'accessToken');
 
 //Params
 $access_token = filter_input(INPUT_POST, PARAM_ACCESS_TOKEN, FILTER_SANITIZE_STRING);

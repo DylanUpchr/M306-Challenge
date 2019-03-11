@@ -9,8 +9,8 @@ use App\User;
 
 $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
 $password = filter_input(INPUT_POST, 'password');
-$firstName = filter_input(INPUT_POST, 'first_name', FILTER_SANITIZE_STRING);
-$lastName = filter_input(INPUT_POST, 'last_name', FILTER_SANITIZE_STRING);
+$firstName = filter_input(INPUT_POST, 'firstName', FILTER_SANITIZE_STRING);
+$lastName = filter_input(INPUT_POST, 'lastName', FILTER_SANITIZE_STRING);
 
 $errors = [];
 
@@ -27,11 +27,11 @@ if (!$password) {
 }
 
 if (!$firstName) {
-    $errors[] = 'Missing parameter first_name';
+    $errors[] = 'Missing parameter firstName';
 }
 
 if (!$lastName) {
-    $errors[] = 'Missing parameter last_name';
+    $errors[] = 'Missing parameter lastName';
 }
 
 header('Access-Control-Allow-Origin: *');
