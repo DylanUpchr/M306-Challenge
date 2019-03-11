@@ -34,7 +34,7 @@ if ($user && !empty($challengeName)) {
     reply([
         'status' => 'error',
         'errors' => [
-            'Token is invalid'
+            'Invalid token'
         ]
     ]);
 }else{

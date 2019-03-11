@@ -42,7 +42,7 @@ else if ($userId === NULL) {
     Reply([
         'status' => 'error',
         'errors' => [
-            PARAM_ACCESS_TOKEN . ' is invalid'
+            'Invalid token'
         ]
     ]);
 }
