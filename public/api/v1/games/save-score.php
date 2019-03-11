@@ -17,7 +17,7 @@ $errors = [];
 function validateScore() {
     global $errors;
 
-    $score = filter_input(INPUT_POST, 'score', FILTER_SANITIZE_STRING);
+    $score = filter_input(INPUT_POST, 'score', FILTER_VALIDATE_INT);
 
     if (!$score) {
         $errors[] = 'Missing parameter score';
@@ -35,7 +35,7 @@ function validateScore() {
 function validateChallenge() {
     global $errors;
 
-    $challengeId = filter_input(INPUT_POST, 'challenge_id', FILTER_SANITIZE_STRING);
+    $challengeId = filter_input(INPUT_POST, 'challenge_id', FILTER_VALIDATE_INT);
 
     if (!$challengeId) {
         $errors[] = 'Missing parameter challenge_id';
@@ -60,7 +60,7 @@ function validateChallenge() {
 function validateGame() {
     global $errors;
 
-    $gameId = filter_input(INPUT_POST, 'game_id', FILTER_SANITIZE_STRING);
+    $gameId = filter_input(INPUT_POST, 'game_id', FILTER_VALIDATE_INT);
     
     if (!$gameId) {
         $errors[] = 'Missing parameter game_id';
