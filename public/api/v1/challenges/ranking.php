@@ -71,7 +71,7 @@ if (empty($errors)) {
 
     echo json_encode([
         'successes' => [
-            'Ranking got',
+            'Ranking received',
         ],
         'ranking' => $ranking,
     ]);
