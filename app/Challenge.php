@@ -28,7 +28,7 @@ class Challenge
      */
     public function __construct($id, $name, $startDate, $endDate)
     {
-        $this->id = $id;
+        $this->id = (int)$id;
         $this->name = $name;
         $this->startDate = $startDate;
         $this->endDate = $endDate;
@@ -45,7 +45,7 @@ class Challenge
         if (empty($data)) {
             return null;
         }
-        
+
         return new Challenge($data['id'], $data['name'], $data['start_date'], $data['end_date']);
     }
 
@@ -55,8 +55,19 @@ class Challenge
      * @param int $id
      * @return Challenge|null
      */
-    public static function find($id) 
+    public static function find($id)
     {
         return self::factory(DB::run('SELECT * FROM challenges WHERE id = ? LIMIT 1', $id)[0] ?? null) ?? null;
+    }
+
+    /**
+     * @return Challenge[]
+     */
+    public static function all(): array
+    {
+        $rows = DB::run('SELECT * FROM challenges');
+        return array_map(function($row) {
+            return static::factory($row);
+        }, $rows);
     }
 }

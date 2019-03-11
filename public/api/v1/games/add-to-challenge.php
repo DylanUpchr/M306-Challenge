@@ -9,7 +9,7 @@ use App\DB;
 // Nom des paramètres d'entrée en get
 define('PARAM_CHALLENGE_ID', 'challengeId');
 define('PARAM_GAME_ID', 'gameId');
-define('PARAM_TOKEN_NAME', 'token');
+define('PARAM_TOKEN_NAME', 'access_token');
 
 // Filtrage des entrées
 $token = filter_input(INPUT_POST, PARAM_TOKEN_NAME, FILTER_SANITIZE_STRING);
@@ -23,7 +23,7 @@ header('Content-type: application/json; charset=utf-8');
 
 // vérification des conditions de traitement
 if (!empty($token) && $gameId and $challengeId) {
-    DB::run('INSERT INTO challenge_game (challenge_id, game_id) VALUES ('.$challengeId.', '.$gameId.')');
+    DB::run('INSERT INTO challenge_game (challenge_id, game_id) VALUES (?, ?)',$challengeId, $gameId);
     reply([
         'status' => 'success'
     ]);
