@@ -8,7 +8,10 @@ require_once '../../../../main.php';
 
 $challenges = \App\Challenge::all();
 
-header('Content-type: application/json');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Headers: Content-type');
+header('Content-type: application/json; charset=utf-8');
+
 echo json_encode([
     'challenges' => $challenges,
 ]);
