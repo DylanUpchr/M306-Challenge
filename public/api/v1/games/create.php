@@ -28,7 +28,7 @@ if (!empty($token) && !empty($gameName)) {
             reply([
                 'status' => 'success'
             ]);
-       
+
     }else{
         reply([
             'status' => 'error',

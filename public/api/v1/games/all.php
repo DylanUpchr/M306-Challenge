@@ -13,11 +13,8 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: Content-type');
 header('Content-type: application/json; charset=utf-8');
 
-if (empty($errors)) {    
+if (empty($errors)) {
     echo json_encode([
-        'successes' => [
-            'Games found',
-        ],
         'games' => Game::all(),
     ]);
 }

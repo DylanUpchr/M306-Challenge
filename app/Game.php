@@ -11,7 +11,7 @@ use App\DB;
 /**
  * Game model.
  */
-class Game 
+class Game
 {
     public $id;
     public $name;
@@ -24,7 +24,7 @@ class Game
      */
     public function __construct($id, $name)
     {
-        $this->id = $id;
+        $this->id = (int)$id;
         $this->name = $name;
     }
 
@@ -49,7 +49,7 @@ class Game
      * @param int $id
      * @return Game|null
      */
-    public static function find($id) 
+    public static function find($id)
     {
         return self::factory(DB::run('SELECT * FROM games WHERE id = ? LIMIT 1', $id)[0] ?? null) ?? null;
     }
@@ -65,8 +65,17 @@ class Game
         return self::factory(DB::run('SELECT * FROM games WHERE name = ? LIMIT 1', $name)[0] ?? null) ?? null;
     }
 
-    public static function all() 
+    /**
+    *
+    *
+    *@return Game[]
+    *
+    **/
+    public static function all()
     {
-        return DB::run('SELECT id, name FROM games');
+      $rows = DB::run('SELECT id, name FROM games');
+      return array_map(function($row) {
+          return static::factory($row);
+      }, $rows);
     }
 }
