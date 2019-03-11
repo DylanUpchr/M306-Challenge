@@ -9,7 +9,7 @@ use App\User;
 
 // Nom du paramètre d'entrée en get
 define('PARAM_CHALLENGE_NAME', 'name');
-define('PARAM_TOKEN_NAME', 'token');
+define('PARAM_TOKEN_NAME', 'access_token');
 define('DUREE_CHALLENGE', 1000000); //timestamp actuellement 1jour
 
 // Filtrage des paramètre get
@@ -30,7 +30,7 @@ if ($user && !empty($challengeName)) {
         'status' => 'success'
     ]);
 }else if($user === null){
-    
+
     reply([
         'status' => 'error',
         'errors' => [
