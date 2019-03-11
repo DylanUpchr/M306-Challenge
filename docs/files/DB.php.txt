@@ -1,0 +1,64 @@
+<?php
+/**
+* @author Florian Burgener <florian.brgnr@eduge.ch>
+* @version 1.0.0
+*/
+
+namespace App;
+
+use PDO;
+
+/**
+ * DB model.
+ */
+class DB extends PDO
+{
+    private static $instance;
+
+    /**
+     * Get self instance.
+     *
+     * @return void
+     */
+    public static function getInstance()
+    {
+        if (self::$instance === null) {
+            try {
+                $host = getenv('DB_HOST');
+                $dbname = getenv('DB_DATABASE');
+                $username = getenv('DB_USERNAME');
+                $password = getenv('DB_PASSWORD');
+
+                self::$instance = new DB("mysql:host={$host};dbname={$dbname}", $username, $password, [
+                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                    PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true,
+                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                ]);
+            } catch (\PDOException $e) {
+                die("Database is gone");
+            }
+        }
+
+        return self::$instance;
+    }
+
+    /**
+     * Execute a query.
+     *
+     * @param string $query
+     * @param mixed ...$params
+     * @return mixed
+     */
+    public static function run($query, ...$params)
+    {
+        $query = self::getInstance()->prepare($query);
+        $query->execute($params);
+
+        try {
+            return $query->fetchAll();
+        } catch (\PDOException $e) {
+            return null;
+        }
+    }
+}
+
