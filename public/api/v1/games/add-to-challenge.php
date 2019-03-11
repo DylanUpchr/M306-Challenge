@@ -12,9 +12,9 @@ define('PARAM_GAME_ID', 'gameId');
 define('PARAM_TOKEN_NAME', 'token');
 
 // Filtrage des entrées
-$token = filter_input(INPUT_GET, PARAM_TOKEN_NAME, FILTER_SANITIZE_STRING);
-$gameId = filter_input(INPUT_GET, PARAM_GAME_ID, FILTER_VALIDATE_INT);
-$challengeId = filter_input(INPUT_GET, PARAM_CHALLENGE_ID, FILTER_VALIDATE_INT);
+$token = filter_input(INPUT_POST, PARAM_TOKEN_NAME, FILTER_SANITIZE_STRING);
+$gameId = filter_input(INPUT_POST, PARAM_GAME_ID, FILTER_VALIDATE_INT);
+$challengeId = filter_input(INPUT_POST, PARAM_CHALLENGE_ID, FILTER_VALIDATE_INT);
 
 // Autorise les requêtes venant des tiers et défini l'encodage (utf-8) et le type de contenu (json)
 header('Access-Control-Allow-Origin: *');

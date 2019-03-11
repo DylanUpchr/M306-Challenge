@@ -12,7 +12,7 @@ define('PARAM_USER_ID', 'userId');
 define('PARAM_ADMIN_ID', 'adminId');
 
 //Params
-$token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
+$token = filter_input(INPUT_POST, 'access_token', FILTER_SANITIZE_STRING);
 $userId = filter_input(INPUT_POST, PARAM_USER_ID, FILTER_VALIDATE_INT);
 $adminId = filter_input(INPUT_POST, PARAM_ADMIN_ID, FILTER_VALIDATE_INT);
 $challengeId = filter_input(INPUT_POST, PARAM_CHALLENGE_ID, FILTER_VALIDATE_INT);
