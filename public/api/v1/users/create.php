@@ -45,7 +45,7 @@ if (empty($errors)) {
         'successes' => [
             'User successfully registered'
         ],
-        'access_token' => $user->accessToken,
+        'accessToken' => $user->accessToken,
         'username' => $user->username,
     ]);
 } else {
