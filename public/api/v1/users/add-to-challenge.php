@@ -6,25 +6,24 @@
 
 require_once '../../../../main.php';
 use App\DB;
+use App\User;
 
-define('PARAM_CHALLENGE_ID', 'challengeId');
-define('PARAM_USER_ID', 'userId');
-define('PARAM_ADMIN_ID', 'adminId');
+define('PARAM_CHALLENGE_ID', 'challenge_id');
+define('PARAM_ACCESS_TOKEN', 'access_token');
 
 //Params
-$token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
-$userId = filter_input(INPUT_POST, PARAM_USER_ID, FILTER_VALIDATE_INT);
-$adminId = filter_input(INPUT_POST, PARAM_ADMIN_ID, FILTER_VALIDATE_INT);
+$access_token = filter_input(INPUT_POST, PARAM_ACCESS_TOKEN, FILTER_SANITIZE_STRING);
 $challengeId = filter_input(INPUT_POST, PARAM_CHALLENGE_ID, FILTER_VALIDATE_INT);
 
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: Content-type');
 header('Content-type: application/json; charset=utf-8');
-//Check token, userId and challengeId
-if (!empty($token) and $userId and $adminId and $challengeId) {
+//Check access_token and challengeId
+$userId = User::findByAccessToken($access_token);
+if ($userId and $challengeId) {
     try {
         //Insert link between challenge and user
-        DB::run('INSERT INTO challenge_user (challenge_id, user_id, admin) VALUES (?, ?, ?)', $challengeId, $userId, $adminId);
+        DB::run('INSERT INTO challenge_user (challenge_id, user_id, admin) VALUES (?, ?, ?)', $challengeId, $userId->id, 0);
     } catch (\Throwable $th) {
         //Catch DB error
     Reply([
@@ -38,12 +37,21 @@ if (!empty($token) and $userId and $adminId and $challengeId) {
     Reply([
         'status' => 'success'
     ]);
-}else{
+}
+else if ($userId === NULL) {
+    Reply([
+        'status' => 'error',
+        'errors' => [
+            PARAM_ACCESS_TOKEN . ' is invalid'
+        ]
+    ]);
+}
+else{
     //Catch param error
     Reply([
         'status' => 'error',
         'errors' => [
-            PARAM_CHALLENGE_ID . ', ' . PARAM_ADMIN_ID . ' and ' . PARAM_USER_ID . ' are required'
+            PARAM_CHALLENGE_ID . ' and ' . PARAM_ACCESS_TOKEN . ' are required'
         ]
     ]);
 }

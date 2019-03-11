@@ -21,11 +21,20 @@ header('Access-Control-Allow-Headers: Content-type');
 header('Content-type: application/json; charset=utf-8');
 
 // vérification des conditions de traitement
-if (!empty($token) && !empty($challengeName)) {
+$user = User::findByAccessToken($token);
+if ($user && !empty($challengeName)) {
     // Insertion d'un nouveau challenge dans la base
     DB::run('INSERT INTO challenges (name, start_date, end_date) VALUES ("'.$challengeName.'", NOW(), NOW() + '.DUREE_CHALLENGE.')');
     reply([
         'status' => 'success'
+    ]);
+}else if($user === null){
+    
+    reply([
+        'status' => 'error',
+        'errors' => [
+            'Token is invalid'
+        ]
     ]);
 }else{
     // Répondre une erreur
