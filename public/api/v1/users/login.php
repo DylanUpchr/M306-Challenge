@@ -38,7 +38,7 @@ header('Content-type: application/json; charset=utf-8');
 if (empty($errors)) {
     echo json_encode([        
         'successes' => $successes,
-        'access_token' => $user->accessToken,
+        'accessToken' => $user->accessToken,
     ]);
 } else {
     echo json_encode([
