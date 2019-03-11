@@ -5,6 +5,7 @@
 */
 require_once '../../../../main.php';
 use App\DB;
+use App\User;
 
 // Nom du paramètre d'entrée en get
 define('PARAM_CHALLENGE_NAME', 'name');
