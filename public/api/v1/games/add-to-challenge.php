@@ -55,7 +55,7 @@ function validateGame() {
     $game = Game::find($gameId);
 
     if (!$game) {
-        $errors[] = 'Cannot find challenge from gameId value';
+        $errors[] = 'Cannot find game from gameId value';
         return null;
     }
 
