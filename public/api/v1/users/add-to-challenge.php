@@ -29,7 +29,7 @@ if ($userId and $challengeId) {
     Reply([
         'status' => 'error',
         'errors' => [
-            'Database error occured.'
+            'Database error occurred.'
         ]
     ]);
     }
