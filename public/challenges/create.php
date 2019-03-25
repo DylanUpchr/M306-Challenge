@@ -42,7 +42,7 @@ if (empty($challengeStart) || empty($challengeEnd)) {
     ]);
 }
 
-if (strtotime($challengeStart) >= time()) {
+if (strtotime($challengeStart) <= time()) {
     reply([
         'status' => 'error',
         'errors' => [
