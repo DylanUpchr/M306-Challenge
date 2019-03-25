@@ -10,8 +10,8 @@ use App\User;
 // Nom du paramètre d'entrée en get
 define('PARAM_CHALLENGE_NAME', 'name');
 define('PARAM_TOKEN_NAME', 'accessToken');
-define('PARAM_CHALLENGE_START', 'start_date');
-define('PARAM_CHALLENGE_END', 'end_date');
+define('PARAM_CHALLENGE_START', 'startDate');
+define('PARAM_CHALLENGE_END', 'endDate');
 
 define('DUREE_CHALLENGE', 1000000); //timestamp actuellement 1jour
 
