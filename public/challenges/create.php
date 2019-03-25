@@ -7,6 +7,10 @@ require_once '../../main.php';
 use App\DB;
 use App\User;
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 // Nom du paramètre d'entrée en get
 define('PARAM_CHALLENGE_NAME', 'name');
 define('PARAM_TOKEN_NAME', 'accessToken');
@@ -28,9 +32,28 @@ header('Content-type: application/json; charset=utf-8');
 
 // vérification des conditions de traitement
 $user = User::findByAccessToken($token);
-if ($user && !empty($challengeName) && (!empty($challengeStart) && !empty($challengeEnd) && $challengeStart >= time())) {
+
+if (empty($challengeStart) || empty($challengeEnd)) {
+    reply([
+        'status' => 'error',
+        'errors' => [
+            'Missing startDate or endDate parameter'
+        ]
+    ]);
+}
+
+if (strtotime($challengeStart) >= time()) {
+    reply([
+        'status' => 'error',
+        'errors' => [
+            'Invalid startDate'
+        ]
+    ]);
+}
+
+if ($user && !empty($challengeName)) {
     // Insertion d'un nouveau challenge dans la base
-    DB::run('INSERT INTO challenges (name, start_date, end_date) VALUES ("'.$challengeName.'", '.$challengeStart.', '.$challengeEnd.')');
+    DB::run('INSERT INTO challenges (name, start_date, end_date) VALUES (?, ?, ?)', $challengeName, $challengeStart, $challengeEnd);
     reply([
         'status' => 'success'
     ]);
