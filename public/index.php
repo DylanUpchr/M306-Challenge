@@ -17,8 +17,8 @@ h1 {
 </head>
 <body>
     <h1>Documentation</h1>
-	<object data="/files/documentation.pdf" type="application/pdf" style="width: 100%; height: 90vh">
-        <embed src="/files/documentation.pdf" type="application/pdf" />
+	<object data="/files/documentation.pdf?" type="application/pdf" style="width: 100%; height: 90vh">
+        <embed src="/files/documentation.pdf?" type="application/pdf" />
     </object>
 
 </body>
