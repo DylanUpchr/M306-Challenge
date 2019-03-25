@@ -4,7 +4,7 @@
  * @author Nicolas Ettlin <nicolas.ettln@eduge.ch>
  * @version 1.0.0
  */
-require_once '../../../../main.php';
+require_once '../../main.php';
 
 $challenges = \App\Challenge::all();
 

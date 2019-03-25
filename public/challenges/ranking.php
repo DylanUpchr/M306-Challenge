@@ -1,14 +1,13 @@
 <?php
 /**
-* @author Florian Burgener <florian.brgnr@eduge.ch>, Ismael Adda <ismael.add@eduge.ch>, Jules Stahli <jules.sthl@eduge.ch>
+* @author Florian Burgener <florian.brgnr@eduge.ch>, Jules Stahli <jules.sthl@eduge.ch>, Jules Bursik <jules.brsk@eduge.ch>
 * @version 1.0.0
 */
-require_once '../../../../main.php';
+require_once '../../main.php';
 
 use App\DB;
-use App\Challenge;
-use App\Game;
 use App\User;
+use App\Challenge;
 
 $errors = [];
 
@@ -20,7 +19,7 @@ $errors = [];
 function validateUser() {
     global $errors;
 
-    $accessToken = filter_input(INPUT_POST, 'accessToken', FILTER_SANITIZE_STRING);
+    $accessToken = filter_input(INPUT_GET, 'accessToken', FILTER_SANITIZE_STRING);
 
     if (!$accessToken) {
         $errors[] = 'Missing parameter accessToken';
@@ -38,31 +37,6 @@ function validateUser() {
 }
 
 /**
- * Validate game.
- *
- * @return Game|null
- */
-function validateGame() {
-    global $errors;
-
-    $gameId = filter_input(INPUT_POST, 'gameId', FILTER_VALIDATE_INT);
-
-    if (!$gameId) {
-        $errors[] = 'Missing parameter gameId';
-        return null;
-    }
-
-    $game = Game::find($gameId);
-
-    if (!$game) {
-        $errors[] = 'Cannot find game from gameId value';
-        return null;
-    }
-
-    return $game;
-}
-
-/**
  * Validate challenge.
  *
  * @return Challenge|null
@@ -70,7 +44,7 @@ function validateGame() {
 function validateChallenge() {
     global $errors;
 
-    $challengeId = filter_input(INPUT_POST, 'challengeId', FILTER_VALIDATE_INT);
+    $challengeId = filter_input(INPUT_GET, 'challengeId', FILTER_VALIDATE_INT);
 
     if (!$challengeId) {
         $errors[] = 'Missing parameter challengeId';
@@ -88,7 +62,6 @@ function validateChallenge() {
 }
 
 $user = validateUser();
-$game = validateGame();
 $challenge = validateChallenge();
 
 header('Access-Control-Allow-Origin: *');
@@ -96,12 +69,13 @@ header('Access-Control-Allow-Headers: Content-type');
 header('Content-type: application/json; charset=utf-8');
 
 if (empty($errors)) {
-    DB::run('INSERT INTO challenge_game(challenge_id, game_id) VALUES (?, ?)', $challenge->id, $game->id);
+    $ranking = $challenge->ranking($challenge->id);
 
     echo json_encode([
         'successes' => [
-            'Game added to challenge',
+            'Ranking received',
         ],
+        'ranking' => $ranking,
     ]);
 } else {
     echo json_encode([

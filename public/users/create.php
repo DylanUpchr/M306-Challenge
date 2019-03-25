@@ -4,7 +4,7 @@
 * @version 1.0.0
 */
 
-require_once '../../../../main.php';
+require_once '../../main.php';
 use App\User;
 
 $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);

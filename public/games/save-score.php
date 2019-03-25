@@ -4,7 +4,7 @@
 * @version 1.0.0
 */
 
-require_once '../../../../main.php';
+require_once '../../main.php';
 use App\{DB, Score, Challenge, Game, User};
 
 $errors = [];
