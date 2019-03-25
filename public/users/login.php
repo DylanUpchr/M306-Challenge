@@ -27,7 +27,6 @@ if ($username && $password) {
         $errors[] = 'Wrong username or password';
     } else {
         $successes = ['User successfully logged'];
-        $user->generateNewAccessToken();
     }
 }
 
